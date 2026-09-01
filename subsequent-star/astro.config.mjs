@@ -4,9 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://arpan2006hub.github.io',
-  // If using a custom domain from Student Pack, change to:
-  // site: 'https://yourdomain.com',
+  site: 'https://arpanbarik.tech', // Your Student Pack domain
   vite: {
     plugins: [tailwindcss()],
   },
