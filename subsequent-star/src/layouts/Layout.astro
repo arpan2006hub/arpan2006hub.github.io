@@ -1,0 +1,99 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+import { meta } from '../content/profile';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = meta.title,
+  description = meta.description,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={meta.url} />
+
+    <!-- Theme script: inline, runs before paint to avoid FOUC -->
+    <script is:inline>
+      (function(){
+        var s=localStorage.getItem('theme');
+        var d=window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var t=s||(d?'dark':'light');
+        var r=document.documentElement;
+        if(t==='light'){r.classList.add('light');r.classList.remove('dark');}
+        else{r.classList.add('dark');r.classList.remove('light');}
+      })();
+      // Global toggle function — called from nav button
+      function toggleTheme(){
+        var r=document.documentElement;
+        var isLight=r.classList.contains('light');
+        if(isLight){r.classList.replace('light','dark');localStorage.setItem('theme','dark');}
+        else{r.classList.replace('dark','light');localStorage.setItem('theme','light');}
+        // Sync icon
+        var sun=document.getElementById('icon-sun');
+        var moon=document.getElementById('icon-moon');
+        var btn=document.getElementById('theme-toggle');
+        var nowLight=r.classList.contains('light');
+        if(sun){sun.classList.toggle('hidden',nowLight);}
+        if(moon){moon.classList.toggle('hidden',!nowLight);}
+        if(btn){btn.setAttribute('aria-label',nowLight?'Switch to dark mode':'Switch to light mode');}
+      }
+    </script>
+
+    <!-- Font preloads (critical weights) -->
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk-SemiBold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/JetBrainsMono-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // IntersectionObserver reveal — respects prefers-reduced-motion
+      (function(){
+        if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var obs=new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);}
+          });
+        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('[data-reveal]').forEach(function(el){obs.observe(el);});
+      })();
+    </script>
+  </body>
+</html>

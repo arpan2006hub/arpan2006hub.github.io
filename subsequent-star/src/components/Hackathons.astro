@@ -1,0 +1,64 @@
+---
+// src/components/Hackathons.astro
+import { hackathons } from '../content/profile';
+---
+
+<section id="hackathons" class="section-pad section-divider">
+  <div class="container-site" data-reveal>
+    
+    <!-- Section Header -->
+    <div class="max-w-2xl mb-12">
+      <span class="section-label">Hackathons & Extracurriculars</span>
+      <h2 class="t-h2 text-[var(--text)]">
+        In the arena & shipping fast
+      </h2>
+    </div>
+
+    <!-- Structured Hackathons List -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      {hackathons.map((item) => (
+        <div class="hackathon-card flex flex-col justify-between">
+          <div>
+            <!-- Top bar: Year + Event -->
+            <div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-[var(--border)]">
+              <span class="mono text-accent text-xs font-semibold uppercase tracking-wider">
+                {item.event}
+              </span>
+              <span class="mono px-2 py-0.5 rounded text-xs bg-[var(--bg)] border border-[var(--border)] text-muted">
+                {item.year}
+              </span>
+            </div>
+
+            <!-- Project Name -->
+            <h3 class="t-h3 text-[var(--text)] mb-3">
+              {item.projectName}
+            </h3>
+
+            <!-- Stack tags if present -->
+            {item.stack && (
+              <div class="flex flex-wrap gap-1.5 mb-4" aria-label="Technologies used">
+                {item.stack.map((tech) => (
+                  <span class="inline-block px-2 py-0.5 rounded text-xs font-mono text-[var(--text-muted)] bg-[var(--bg)] border border-[var(--border)]">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <!-- Description -->
+            <p class="t-small text-[var(--text-muted)] leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+
+          <!-- Bottom status -->
+          <div class="mt-6 pt-3 border-t border-[var(--border)] flex items-center justify-between">
+            <span class="mono text-muted text-[0.7rem] uppercase tracking-wider">Status</span>
+            <span class="mono text-accent text-xs font-medium">Completed & Shipped</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

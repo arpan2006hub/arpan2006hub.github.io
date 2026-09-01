@@ -1,0 +1,70 @@
+---
+// src/components/Skills.astro
+import { skills } from '../content/profile';
+
+const proficiencyNotes: Record<string, string> = {
+  Python: 'proficient',
+  'C++': 'proficient',
+  Solidity: 'proficient',
+  Java: 'intermediate',
+  JavaScript: 'intermediate',
+  TypeScript: 'intermediate',
+  Go: 'intermediate',
+};
+---
+
+<section id="skills" class="section-pad section-divider">
+  <div class="container-site" data-reveal>
+    
+    <!-- Section Header -->
+    <div class="max-w-2xl mb-12">
+      <span class="section-label">Skills</span>
+      <h2 class="t-h2 text-[var(--text)]">
+        Technical stack & toolchain
+      </h2>
+    </div>
+
+    <!-- 2x2 Grid of Skill Cards -->
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+      {skills.map((group) => (
+        <div class="spec-card shadow-xl shadow-black/20">
+          
+          <!-- Category Header -->
+          <div class="spec-card-header">
+            <div class="flex items-center justify-between w-full">
+              <div class="flex items-center gap-2">
+                <span class="status-dot"></span>
+                <span class="text-accent font-semibold">{group.label}</span>
+              </div>
+              <span class="mono text-muted text-xs">
+                {group.items.length} technologies
+              </span>
+            </div>
+          </div>
+
+          <!-- Skill Badges -->
+          <div class="spec-card-body">
+            <ul class="flex flex-wrap gap-2.5 list-none" role="list">
+              {group.items.map((item) => (
+                <li>
+                  <span class="skill-pill">
+                    <span class="font-medium">{item}</span>
+                    {proficiencyNotes[item] && (
+                      <span
+                        class="text-[0.68rem] px-1.5 py-0.2 rounded bg-[var(--accent-muted)] text-accent font-mono"
+                        aria-label={`(${proficiencyNotes[item]})`}
+                      >
+                        {proficiencyNotes[item]}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

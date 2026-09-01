@@ -1,0 +1,424 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   global.css  —  Single style entrypoint for Arpan Barik portfolio
+   Tailwind CSS v4 — CSS-first configuration
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@import "tailwindcss";
+
+/* ─── Self-hosted fonts ─────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/SpaceGrotesk-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/SpaceGrotesk-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/SpaceGrotesk-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+/* ─── Tailwind v4 theme tokens ──────────────────────────────────────────────── */
+
+@theme {
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ─── Color tokens — dark mode (default) ────────────────────────────────────── */
+
+:root {
+  --accent:       #E65400;
+  --accent-muted: rgba(230, 84, 0, 0.15);
+  --bg:           #0C0A08;
+  --surface:      #14100D;
+  --surface-hover:#1A1612;
+  --text:         #F4EFEA;
+  --text-muted:   #8C8075;
+  --border:       rgba(255, 255, 255, 0.08);
+  --border-strong:rgba(255, 255, 255, 0.16);
+  color-scheme: dark;
+}
+
+/* Light mode — activated by .light class on <html> */
+:root.light {
+  --accent:       #E65400;
+  --accent-muted: rgba(230, 84, 0, 0.1);
+  --bg:           #FAF7F2;
+  --surface:      #F0EAE1;
+  --surface-hover:#E6DFC5;
+  --text:         #1C140D;
+  --text-muted:   #6C6055;
+  --border:       rgba(0, 0, 0, 0.09);
+  --border-strong:rgba(0, 0, 0, 0.18);
+  color-scheme: light;
+}
+
+/* Also respect OS preference when no manual override is stored */
+@media (prefers-color-scheme: light) {
+  :root:not(.dark):not(.light) {
+    --accent:       #E65400;
+    --accent-muted: rgba(230, 84, 0, 0.1);
+    --bg:           #FAF7F2;
+    --surface:      #F0EAE1;
+    --surface-hover:#E6DFC5;
+    --text:         #1C140D;
+    --text-muted:   #6C6055;
+    --border:       rgba(0, 0, 0, 0.09);
+    --border-strong:rgba(0, 0, 0, 0.18);
+    color-scheme: light;
+  }
+}
+
+/* ─── Base reset & element defaults ─────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─── Standard Layout & Container Classes (Pure CSS) ─────────────────────────── */
+
+.container-site {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 2.5rem);
+  padding-right: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.section-pad {
+  padding-top: clamp(4.5rem, 8vw, 7.5rem);
+  padding-bottom: clamp(4.5rem, 8vw, 7.5rem);
+}
+
+.section-divider {
+  border-top: 1px solid var(--border);
+}
+
+.hairline {
+  border: 1px solid var(--border);
+}
+
+.hairline-accent {
+  border: 1px solid var(--accent);
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.bg-surface {
+  background-color: var(--surface) !important;
+}
+
+.bg-surface-hover:hover {
+  background-color: var(--surface-hover) !important;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Reveal animation ──────────────────────────────────────────────────────── */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Nav styling ────────────────────────────────────────────────────────────── */
+
+.nav-scrolled {
+  border-bottom-color: var(--border) !important;
+  background-color: color-mix(in srgb, var(--bg) 85%, transparent) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ─── Typography hierarchy ──────────────────────────────────────────────────── */
+
+.t-hero {
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.t-h2 {
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.t-h3 {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.t-body {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.75;
+}
+
+.t-small {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ─── Section Header Pattern ─────────────────────────────────────────────────── */
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-label::before {
+  content: "";
+  display: inline-block;
+  width: 1.25rem;
+  height: 1px;
+  background-color: var(--accent);
+}
+
+/* ─── Skill Pill Component ──────────────────────────────────────────────────── */
+
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--text);
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+
+.skill-pill:is(:hover, :focus-visible) {
+  border-color: var(--accent);
+  background-color: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+/* ─── Project Card Component ────────────────────────────────────────────────── */
+
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: clamp(1.35rem, 2.5vw, 1.85rem);
+  background-color: var(--surface);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card:is(:hover, :focus-within) {
+  border-color: var(--accent);
+  background-color: var(--surface-hover);
+  transform: translateY(-3px);
+}
+
+.project-card-featured {
+  border: 1px solid var(--accent);
+  position: relative;
+}
+
+.project-card-featured::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* ─── Hackathon Timeline ────────────────────────────────────────────────────── */
+
+.hackathon-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  background-color: var(--surface);
+  transition: border-color 0.2s ease;
+}
+
+.hackathon-card:hover {
+  border-color: var(--border-strong);
+}
+
+/* ─── Technical spec card in Hero ────────────────────────────────────────────── */
+
+.spec-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--surface);
+  font-family: var(--font-mono);
+  overflow: hidden;
+}
+
+.spec-card-header {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: color-mix(in srgb, var(--surface) 60%, var(--bg));
+}
+
+.spec-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ─── Pulsing dot indicator ─────────────────────────────────────────────────── */
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  display: inline-block;
+}
+
+/* ─── Focus styles (accessibility) ─────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
